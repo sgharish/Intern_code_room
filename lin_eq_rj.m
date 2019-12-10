@@ -8,16 +8,16 @@ clear all
 global r m M b c J I alpha tau g l Mlr Mgl a1 a2 a3 a4 linA;
 
 r = 0.045;
-m = 0.9;
-M = 1;
+m = 1;
+M = 1.2;
 b = 0.01;
 c = 0.0047;
 J = 5*10^(-6);
 I = 1*10^(-3);
 alpha = 0;
 tau = 0;
-g = -9.8;
-l = 0.07;
+g = 9.8;
+l = 0.188;
 Mlr = M*l*r;
 Mgl = M*g*l;
 a1 = J + (M + m)*r^2;
@@ -80,15 +80,14 @@ linB = [0; 0; b3; b4];
 
 olp = eig(linA)
 
-Q = diag([1e2,5e-4,1e1,1e-1]);
-R = 2e1;
-%Q = [0.00034 0 0 0; 0 0.005 0 0 ; 0 0 0.0002 0; 0 0 0 0.0089] 
-% based on byrson's rule since we dont have C my approximation is C [1 0 0 0; 0 0 1 0 ]
-%R = 1
+%Q = diag([1e2,5e-1,1e1,1e0]);
+%R = 5e1;
+%ms Jackson's value
+Q =diag([10,50,1,5]); %diag([5e1,3e2,2e-4,3e0]); %diag([7e-2,9e1,9e-3,3e-1])%
+R = 100;%2e2
 
-K = lqr(linA,linB,Q,R);
+K = lqr(linA,linB,Q,R) %[-0.0374,2.3261,-0.0139,0.167] 
 clp = eig(linA -(linB*K))
-
 
 
 % p = [-24.7520 + 0.0000i, -0.9305 + 3.6035 i, -0.9305 - 3.6035i, -1.0147 + 0.0000i];
